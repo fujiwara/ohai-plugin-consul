@@ -5,7 +5,6 @@ Ohai.plugin(:Consul) do
   provides "consul"
 
   def create_objects
-    Ohai::Log.info("create objects")
     consul Mash.new
     consul[:agent] = {}
     consul[:catalog] = {
@@ -24,6 +23,7 @@ Ohai.plugin(:Consul) do
   end
 
   def get(key)
+    Ohai::Log.debug("get from consul api /#{CONSUL_API_VERSION}/#{key}")
     response = http_client.get("/#{CONSUL_API_VERSION}/#{key}")
     unless response.code == '200'
       raise "Encountered error retrieving consul API (returned #{response.code} response)"
