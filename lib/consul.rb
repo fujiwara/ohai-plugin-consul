@@ -68,8 +68,15 @@ Ohai.plugin(:Consul) do
       consul[:catalog][key] = get "catalog/#{key}"
     end
 
-    consul[:catalog][:service] = Ohai::Plugin::Consul::ServiceHash.new
-    consul[:catalog][:node] = Ohai::Plugin::Consul::NodeHash.new
+    # collect all services
+    consul[:catalog][:services].keys.each do |name|
+      consul[:catalog][:service][name] = get "catalog/service/#{name}"
+    end
+
+    # collect all nodes
+    consul[:catalog][:nodes].map{|n| n["Node"]}.each do |name|
+      consul[:catalog][:node][name] = get "catalog/node/#{name}"
+    end
 
     # status
     consul[:status][:leader] = get "status/leader"
