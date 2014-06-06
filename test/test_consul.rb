@@ -5,13 +5,12 @@ require "glint"
 
 Ohai::Config[:plugin_path] << "./lib"
 server = Glint::Server.new(8500, { :timeout => 3 }) do |port|
-  dir = Dir.tmpdir
+  dir = Dir.mktmpdir
   exec "consul", "agent", "-data-dir", dir, "-server", "-bootstrap"
 end
 server.start
 $o = Ohai::System.new
 $o.all_plugins
-puts $o[:consul]
 
 class TestOhaiPluginConsul < Test::Unit::TestCase
   def setup
