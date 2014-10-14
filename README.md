@@ -36,7 +36,7 @@ via Ohai module in your scripts
 
 ```ruby
 require 'ohai'
-Ohai::Config[:plugin_dir] << '/path/to/plugin_dir'
+Ohai::Config[:plugin_path] << '/path/to/plugin_dir'
 oh = Ohai::System.new
 oh.all_plugins
 oh[:consul]  #= consul (agent/catalog/status) information
