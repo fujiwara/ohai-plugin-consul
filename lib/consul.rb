@@ -1,5 +1,5 @@
 require "net/http"
-require "yajl"
+require "json"
 
 module Ohai
   module Plugin
@@ -18,7 +18,7 @@ module Ohai
         unless response.code == '200'
           raise "Encountered error retrieving consul API (returned #{response.code} response)"
         end
-        Yajl::Parser.new.parse(response.body)
+        JSON.load(response.body)
       end
 
       class ServiceHash < Hash
