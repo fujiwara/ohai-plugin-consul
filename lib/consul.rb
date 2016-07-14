@@ -59,7 +59,7 @@ Ohai.plugin(:Consul) do
     create_objects
 
     # agent
-    [ :checks, :members, :services ].each do |key|
+    [ :checks, :members, :services, :self ].each do |key|
       consul[:agent][key] = get "agent/#{key}"
     end
 
